@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - A Pen by Anonymouscoder</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>USAC STORE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body onload="Ver()">
+    <nav>
+<div class="logo">
+<a id="nav-link" href="https://thelifechat.tk">Usac Store</div></a>
+<div class="nav-items">
+  <li><a href="../APPSINICIO/index.html">Inicio</a></li>
+  <li><a href="../index.html">Categorias</a></li>
+  <li><a href="../SolicitudApps/index.html">Subir App</a></li>
+   <li><a href="../ModUser/index.html">Modificar Perfil</a></li>
+   <li><a href="../index.html">Cerrar Sesion</a></li>
+</div>
+</nav>
+<script>
+    const menuBtn = document.querySelector(".menu-icon span");
+    const searchBtn = document.querySelector(".search-icon");
+    const cancelBtn = document.querySelector(".cancel-icon");
+    const items = document.querySelector(".nav-items");
+    const form = document.querySelector("form");
+    menuBtn.onclick = ()=>{
+      items.classList.add("active");
+      menuBtn.classList.add("hide");
+      searchBtn.classList.add("hide");
+      cancelBtn.classList.add("show");
+    }
+    cancelBtn.onclick = ()=>{
+      items.classList.remove("active");
+      menuBtn.classList.remove("hide");
+      searchBtn.classList.remove("hide");
+      cancelBtn.classList.remove("show");
+      form.classList.remove("active");
+      cancelBtn.style.color = "#ff3d00";
+    }
+    searchBtn.onclick = ()=>{
+      form.classList.add("active");
+      searchBtn.classList.add("hide");
+      cancelBtn.classList.add("show");
+    }
+    function show() {
+    var x = document.getElementById("show");
+    if (x.type === "password") {
+    x.type = "text";
+    } else {
+    x.type = "password";
+    }
+}
+function show1() {
+    var x = document.getElementById("show1");
+    if (x.type === "password") {
+    x.type = "text";
+    } else {
+    x.type = "password";
+    }
+}
+  </script>
+
+
+
+
+
+                <div class="middle">
+                   <div class="container">     
+                           
+                            <form onsubmit="return false">
+                              <div id="prueba">
+                              </div>
+
+
+
+                   </form>
+                    
+                  </div>
+               </div>
+      
+      
+      <!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+      
+      <script>
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		headers.append('Accept', 'application/json');
+		headers.append('Access-Control-Allow-Origin', 'http://localhost:5001');
+		headers.append('Access-Control-Allow-Credentials', 'true');
+		headers.append('GET', 'POST', 'OPTIONS');
+		function registrar(){
+			//Obteniendo la data para el registro
+
+			let user = document.getElementById("username").value;
+			//Mando a hacer la peticion
+			fetch('http://localhost:5001/recuperar', {
+  				method: 'POST',
+  				headers: headers,
+  				body: `{  
+    				"username":"${user}"
+                     }`,
+				})
+			//Aca espero a mi respuesta
+			.then(response => response.json())
+			//Aca yo ya trabajo con la respuesta
+			.then(data => {
+				alert(data.data)
+        window.location.replace('../index.html')
+			})
+			.catch((error) => {
+  				console.error('Error:', error);
+			});
+
+		}
+
+    function Aplicaciones() {
+          //Obteniendo la data para el registro
+  
+  
+          //Mando a hacer la peticion
+          fetch('http://localhost:5001/verapps', {
+            method: 'GET',
+            headers: headers,
+          })
+            //Aca espero a mi respuesta
+            .then(response => response.json()
+  
+            )
+            //Aca yo ya trabajo con la respuesta
+  
+            .then(data => {
+              console.log(data)
+              let XD = '<ul class="cards"><li class="cards__item"><div class="card"><div class=card__image style="background-image: url(';
+              let XDF = "</ul>";
+              let ssss = "";
+              for (let index = 0; index < data.length; index++) {
+                if(data[index].apro=='s'){
+                ssss = '<li class="cards__item"> <div class="card">  <div class=card__image style="background-image: url(' + data[index].url +');" ></div><div class="card__content"><div class="card__title">________________________________ ' + data[index].titulo +'</div><p class="card__text">'+ data[index].descripcion +' </p><button id="'+index+'" onclick="shapp(this)" class="btn btn--block card__btn">Ver mas...</button></div></div></li>';
+              }
+              }
+              let prueba = document.querySelector('#prueba').innerHTML = XD + ssss + XDF;
+            
+  
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+  
+        }
+
+
+
+
+
+        function Ver(){
+      var cargar = sessionStorage.ide
+      console.log(cargar)
+     
+            fetch('http://localhost:5001/appid/'+cargar, {
+            method: 'GET',
+            headers: headers,
+          })
+            //Aca espero a mi respuesta
+            .then(response => response.json()
+            )
+
+            .then(data => {
+
+              console.log(data)
+              let XD = '<ul class="cards"><li class="cards__item"><div class="card"><div class=card__image style="background-image: url(';
+              let XDF = "</ul>";
+              let ssss = "";
+              let res =data.reseña;
+              if(data.reseña==undefined){
+                res="";
+              }
+          
+                ssss = data.url +');" ></div><div class="card__content"><div id="titulo" class="card__title">' + data.titulo +'</div><p class="card__text">'+ data.descripcion +'</p><hr><div><p class="card__textt"><br> <strong>Precio: '+data.precio+' Dolares</strong> <br><strong>Descargas: '+data.descargas+'</strong> </p> <hr><div><strong>RESEÑAS</strong>'+res+'</div><textarea id="descripcion" rows="8" cols="25" placeholder="Escribir Reseña"></textarea><br><button onclick="reseña()" class="btn btn--block card__btn">Subir Reseña</button><br><hr><br><strong>LIKES</strong><button onclick="like()" class="btn btn--block card__btn"><h3 id="likes">'+data.likes+'</h3></button><br><button onclick="location.href='+"'../APPSINICIO/index.html'"+'" class="btn btn--block card__btn">Regresar</button></div></div></li>';
+//<p class="card__textt"><br><strong>Juanito</strong><br>Tdddddddddddddddd fernando alfredo, don anito el cara de chucho , simon, hay que hacer mi gente sucia entonces pongase a trabajar. </p>
+              
+              
+              let prueba = document.querySelector('#prueba').innerHTML = XD + ssss + XDF;
+            
+
+
+
+
+
+
+
+  
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+           
+
+
+
+    }
+
+
+function reseña(){
+
+	let desc = document.getElementById("descripcion").value;
+  let aydi = sessionStorage.ide
+  let reseñador = sessionStorage.usuario
+  
+  let seña = "<p class='card__textt'><br><strong>-"+reseñador+"-</strong><br>"+desc+"</p>"
+console.log(aydi)
+console.log(reseñador)
+console.log(seña)
+
+  fetch('http://localhost:5001/rese', {
+  				method: 'POST',
+  				headers: headers,
+  				body: `{
+            "id":${aydi},
+            "reseña":"${seña}"
+                     }`,
+				})
+			//Aca espero a mi respuesta
+			.then(response => response.json())
+			//Aca yo ya trabajo con la respuesta
+			.then(data => {
+        
+        alert(data.data)
+        window.location.reload()
+			})
+			.catch((error) => {
+  				console.error('Error:', error);
+			});
+
+
+
+
+
+}
+
+
+//<p class="card__textt"><br><strong>Juanito</strong><br>Tdddddddddddddddd fernando alfredo, don anito el cara de chucho , simon, hay que hacer mi gente sucia entonces pongase a trabajar. </p>
+
+
+function like(){
+
+
+let aydi = sessionStorage.ide
+
+console.log(aydi)
+
+fetch('http://localhost:5001/like', {
+        method: 'POST',
+        headers: headers,
+        body: `{
+          "id":${aydi}
+                   }`,
+      })
+    //Aca espero a mi respuesta
+    .then(response => response.json())
+    //Aca yo ya trabajo con la respuesta
+    .then(data => {
+      
+      console.log(data.data)
+      window.location.reload()
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+
+
+
+
+}
+
+
+
+
+
+		
+	</script>
+      
+      
+      
+      
+      
+      
+      
+  </body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - A Pen by Anonymouscoder</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Solicitud</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <nav>
+<div class="logo">
+<a id="nav-link" href="https://thelifechat.tk">Usac Store</div></a>
+<div class="nav-items">
+  <li><a href="../APPSINICIO/index.html">Inicio</a></li>
+  <li><a href="../index.html">Categorias</a></li>
+  <li><a href="">Subir App</a></li>
+   <li><a href="../ModUser/index.html">Modificar Perfil</a></li>
+   <li><a href="../index.html">Cerrar Sesión</a></li>
+</div>
+</nav>
+<script>
+    const menuBtn = document.querySelector(".menu-icon span");
+    const searchBtn = document.querySelector(".search-icon");
+    const cancelBtn = document.querySelector(".cancel-icon");
+    const items = document.querySelector(".nav-items");
+    const form = document.querySelector("form");
+    menuBtn.onclick = ()=>{
+      items.classList.add("active");
+      menuBtn.classList.add("hide");
+      searchBtn.classList.add("hide");
+      cancelBtn.classList.add("show");
+    }
+    cancelBtn.onclick = ()=>{
+      items.classList.remove("active");
+      menuBtn.classList.remove("hide");
+      searchBtn.classList.remove("hide");
+      cancelBtn.classList.remove("show");
+      form.classList.remove("active");
+      cancelBtn.style.color = "#ff3d00";
+    }
+    searchBtn.onclick = ()=>{
+      form.classList.add("active");
+      searchBtn.classList.add("hide");
+      cancelBtn.classList.add("show");
+    }
+    function show() {
+    var x = document.getElementById("show");
+    if (x.type === "password") {
+    x.type = "text";
+    } else {
+    x.type = "password";
+    }
+}
+function show1() {
+    var x = document.getElementById("show1");
+    if (x.type === "password") {
+    x.type = "text";
+    } else {
+    x.type = "password";
+    }
+}
+  </script>
+                  <div class="middle">
+                    <div class="container">
+                          <header>Solicitar Apps</header>
+                          <form onsubmit="return false">
+                            
+                             
+                            
+                            
+                              <div class="input-field">
+                                <input class="big"type="text" id="titulo" placeholder="Titulo" required>
+                              </div>
+                            
+                            <div class="input-field">
+                              <input type="text" id="url" placeholder="Url de Imagen" required>
+                            </div>
+
+                            <div class="input-field">
+                              <input type="text" id="categoria" placeholder="Categoría(opcional)">
+                            </div>
+
+                            <div class="input-field">
+                              <input type="text" id="descargas" placeholder="No. de descargas" required>
+                            </div>
+
+                            <div class="input-field">
+                              <input type="text" id="precio" placeholder="Precio" required>
+                            </div>
+
+                            <div class="input-field">
+                              <input type="text" id="likes" placeholder="Likes" required>
+                            </div>
+                            
+                            <div >
+                              <textarea id="descripcion" rows="8" cols="25" placeholder="Descripción"></textarea>
+                            </div>
+
+
+
+                    <div class="button">
+                              <div class="inner">
+                    </div>
+                    <button onclick="Solicitar()">Solicitar</button>
+                            </div>
+                    </form>
+                    
+                    </div>
+                        </div>
+      
+      
+      <!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+      
+
+
+
+
+
+
+
+
+  <script>
+    function comprobarClave(){
+        let pass = document.getElementById("pass").value;
+        let pass2 = document.getElementById("pass2").value;
+        let nomb = document.getElementById("nombre").value;
+			  let apel = document.getElementById("apellido").value;
+			  let user = document.getElementById("username").value;
+        if (!(pass == pass2)||apel==""||user==""||nomb==""||pass==""||pass2=="")
+           alert("Ingrese Datos Validos")
+        else
+           registrar()
+    }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <script>
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		headers.append('Accept', 'application/json');
+		headers.append('Access-Control-Allow-Origin', 'http://localhost:5001');
+		headers.append('Access-Control-Allow-Credentials', 'true');
+		headers.append('GET', 'POST', 'OPTIONS');
+		function Solicitar(){
+			//Obteniendo la data para el registro
+      
+
+
+    
+
+			let tit = document.getElementById("titulo").value;
+			let uerl = document.getElementById("url").value;
+			let cat = document.getElementById("categoria").value;
+      let des = document.getElementById("descargas").value;
+			let desc = document.getElementById("descripcion").value;
+			let prec = document.getElementById("precio").value;
+			let lik = document.getElementById("likes").value;
+
+
+
+
+			//Mando a hacer la peticion
+			fetch('http://localhost:5001/SolicitudApp', {
+  				method: 'POST',
+  				headers: headers,
+  				body: `{  
+					"titulo":"${tit}",
+    				"url":"${uerl}",
+        			"categoria":"${cat}",
+              "descargas":"${des}",
+              "descripcion":"${desc}",
+              "precio":"${prec}",
+              "likes":"${lik}",
+              "apro":"N"
+                     }`,
+				})
+			//Aca espero a mi respuesta
+			.then(response => response.json())
+			//Aca yo ya trabajo con la respuesta
+			.then(data => {
+				alert(data.data)
+        window.location.replace('../APPSINICIO/index.html')
+			})
+			.catch((error) => {
+  				console.error('Error:', error);
+			});
+
+		}
+		
+	</script>
+      
+      
+      
+      
+      
+      
+      
+  </body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
