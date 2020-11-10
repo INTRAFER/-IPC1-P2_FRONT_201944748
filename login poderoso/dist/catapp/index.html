@@ -156,11 +156,12 @@ function show1() {
   
             .then(data => {
               console.log(data)
+              var cargar = sessionStorage.ide
               let XD = '<ul class="cards">';
               let XDF = "</ul>";
               let ssss = "";
               for (let index = 0; index < data.length; index++) {
-                if(data[index].apro=='s'){
+                if(data[index].categoria==cargar){
                 ssss += '<li class="cards__item"> <div class="card">  <div class=card__image style="background-image: url(' + data[index].url +');" ></div><div class="card__content"><div class="card__title">________________________________ ' + data[index].titulo +'</div><p class="card__text">'+ data[index].descripcion +' </p><button id="'+data[index].id+'" onclick="botoncito(this)" class="btn btn--block card__btn">Ver mas...</button></div></div></li>';
               }
               }

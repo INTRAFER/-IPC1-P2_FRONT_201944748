@@ -21,15 +21,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
-  <body>
+  <body onload="Ver()">
     <nav>
       <div class="logo">
         <a id="nav-link" href="https://thelifechat.tk">Usac Store</div></a>
       <div class="nav-items">
-        <li><a href="../APPS_INICIO/index.html">Apps</a></li>
-        <li><a href="../index.html">Login</a></li>
-        <li><a href="../Registro/index.html">Registro</a></li>
-        <li><a href="../VIDEO/index.html">Inicio</a></li>
+        <li><a href="../ADMIN/index.html">Inicio</a></li>
+        <li><a href="../CMASIVAPPS/index.html">Gestión Apps</a></li>
+         <li><a href="../CuadroRESEÑAS/index.html">Reseñas</a></li>
+         <li><a href="../CARGACAT/index.html">Categorias</a></li>
+         <li><a href="../USUARIOS/index.html">Usuarios</a></li>
+         <li><a href="../index.html">Cerrar Sesion</a></li>
       </div>
     </nav>
     <script>
@@ -76,27 +78,22 @@
     </script>
     <div class="middle">
       <div class="container">
-        <header>Recuperación de Contraseña</header>
+        <header>Modificar Categoría</header>
         <div id="prueba"></div>
         <form onsubmit="return false">
           <div class="input-field">
-            <input type="text" id="username" placeholder="Usuario" required>
+            <input type="text" id="categoria" placeholder="Categoría" required>
           </div>
           <div class="button">
             <div class="inner">
             </div>
-            <button onclick="registrar()">Recuperar contraseña</button>
+            <button onclick="modd()">Modificar</button>
           </div>
 
         </form>
 
         
-        <div class="forgot">
-          <a href="/SignUp/index.html"></a>
-        </div>
-        <div class="signup">
-          No tiene una cuenta? <a href="/Registro/index.html"> Registrar</a>
-        </div>
+        
       </div>
     </div>
 
@@ -179,6 +176,74 @@
           });
 
       }
+
+
+
+      function Ver(){
+      var cargar = sessionStorage.ct
+      console.log(cargar)
+
+            fetch('http://localhost:5001/obtenercat/'+cargar, {
+            method: 'GET',
+            headers: headers,
+          })
+            //Aca espero a mi respuesta
+            .then(response => response.json()
+            )
+
+            .then(data => {
+              console.log(data)
+              document.querySelector('#categoria').value = data.categ
+              
+
+              
+  
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+           
+
+
+
+    }
+
+
+
+    function modd(){
+		
+    let aidi =  sessionStorage.ct
+    let tit = document.getElementById("categoria").value;
+   console.log(aidi)
+   console.log(tit)
+
+
+
+
+    fetch('http://localhost:5001/mcat', {
+        method: 'POST',
+        headers: headers,
+        body: `{
+          "cati":"${aidi}",  
+        "categ":"${tit}"
+                   }`,
+      })
+    //Aca espero a mi respuesta
+    .then(response => response.json())
+    //Aca yo ya trabajo con la respuesta
+    .then(data => {
+      alert(data.data)
+      
+     window.location.replace('../CARGACAT/index.html')
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+  }
+
+
+
 
     </script>
 

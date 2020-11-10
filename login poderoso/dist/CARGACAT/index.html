@@ -44,9 +44,9 @@
         <a id="nav-link" href="https://thelifechat.tk">Usac Store</div></a>
       <div class="nav-items">
         <li><a href="../ADMIN/index.html">Inicio</a></li>
-        <li><a href="">Gestión Apps</a></li>
+        <li><a href="../CMASIVAPPS/index.html">Gestión Apps</a></li>
          <li><a href="../CuadroRESEÑAS/index.html">Reseñas</a></li>
-         <li><a href="../CARGACAT/index.html">Categorias</a></li>
+         <li><a href="">Categorias</a></li>
          <li><a href="../USUARIOS/index.html">Usuarios</a></li>
          <li><a href="../index.html">Cerrar Sesion</a></li>
       </div>
@@ -99,14 +99,19 @@
 
 
       <div class="container">
-        <header>Administración Aplicaciones</header>
+        <header>Administración Categorias</header>
         
         <form onsubmit="return false">
           <div id="prueba"></div>
+
+          <div class="input-field">
+            <input type="text" id="categoria" placeholder="Nueva Categoría">
+          </div>
+
   <div class="button">
             <div class="inner">
   </div>
-  <button onclick="acmin()">Subir App</button>
+  <button onclick="nca()">Subir Categoría</button>
           </div>
   </form>
   
@@ -121,16 +126,6 @@
 
 
 
-  <div class="container">
-    <header>Solicitudes</header>
-    
-    <form onsubmit="return false">
-      <div id="prueba2"></div>
-      
-</form>
-
-
-</div>
 
 
 
@@ -138,28 +133,7 @@
 
 
 
-    <div class="container">
-      <header>Carga de Aplicaciones</header>
-      <div id="prueba"></div>
-      <form onsubmit="return false">
-        
-        
-        <div class="input-field">
-          <input type="file" id="sapps" placeholder="Usuario" required>
-        </div>
-
-        <div class="button">
-          <div class="inner">
-          </div>
-          <button onclick="Archivo()">Cargar Apps</button>
-        </div>
-
-
-      </form>
-
-    
-      
-  </div>
+   
 
 
 
@@ -367,7 +341,7 @@
   
   
           //Mando a hacer la peticion
-          fetch('http://localhost:5001/verapps', {
+          fetch('http://localhost:5001/obtenercategorias', {
             method: 'GET',
             headers: headers,
           })
@@ -379,12 +353,12 @@
   
             .then(data => {
               console.log(data)
-              let XD = "<table> <tr><th>Id</th> <th>Nombre App</th><th>Acciones</th></tr>";
+              let XD = "<table> <tr><th>#</th> <th>Categoría</th><th>Acciones</th></tr>";
               let XDF = "</table>";
               let ssss = "";
               for (let index = 0; index < data.length; index++) {
-                if(data[index].apro=='s'){
-                ssss += "<tr>"+"<td>" + data[index].id + "</td>"+"<td>" + data[index].titulo + "</td>"+'<td>'+'<button id="'+data[index].id+'" onclick="botoncito(this)">Modificar</button>' +'<button id="'+data[index].id+'" onclick="botoncito2(this)">Eliminar</button>'+'<button id="'+data[index].id+'" class="inner" onclick="botoncito3(this)">Visualizar</button>'  + "</td>"+'</tr>';
+                if(data[index].bul=='S'){
+                ssss += "<tr>"+"<td>" + index + "</td>"+"<td>" + data[index].categ + "</td>"+'<td>'+'<button id="'+data[index].categ+'" onclick="botoncito(this)">Modificar</button>' +'<button id="'+data[index].categ+'" onclick="botoncito2(this)">Eliminar</button>'+'<button id="'+data[index].categ+'" class="inner" onclick="botoncito3(this)">Visualizar</button>'  + "</td>"+'</tr>';
                 }
               }
               let prueba = document.querySelector('#prueba').innerHTML = XD + ssss + XDF;
@@ -402,10 +376,10 @@
         function botoncito(aidi){
 
           let ID=aidi.id
-          sessionStorage.setItem("ide",aidi.id)
+          sessionStorage.setItem("ct",aidi.id)
 
 
-          window.location.replace('../MODAPPS/index.html')
+          window.location.replace('../MODcat/index.html')
 
         }
 
@@ -415,7 +389,7 @@ let ID=aidi.id
 sessionStorage.setItem("ide",aidi.id)
 
 
-window.location.replace('../1234/index.html')
+window.location.replace('../catapp/index.html')
 
 }
 
@@ -425,11 +399,11 @@ window.location.replace('../1234/index.html')
           let idI=aidi2.id
       console.log(idI)
 
-fetch('http://localhost:5001/borrapp', {
+fetch('http://localhost:5001/borracat', {
   				method: 'POST',
   				headers: headers,
   				body: `{
-            "id":${idI}
+            "categ":"${idI}"
                      }`,
 				})
 			//Aca espero a mi respuesta
@@ -537,7 +511,39 @@ function acc(idee){
 
 
 
+    function nca(){
+			//Obteniendo la data para el registro
+      
 
+
+    
+
+			let tit = document.getElementById("categoria").value;
+		
+
+
+
+			//Mando a hacer la peticion
+			fetch('http://localhost:5001/Ncat', {
+  				method: 'POST',
+  				headers: headers,
+  				body: `{  
+					"categ":"${tit}",
+    				"bul":"S"
+                     }`,
+				})
+			//Aca espero a mi respuesta
+			.then(response => response.json())
+			//Aca yo ya trabajo con la respuesta
+			.then(data => {
+				alert(data.data)
+        window.location.reload()
+			})
+			.catch((error) => {
+  				console.error('Error:', error);
+			});
+
+		}
 
 
 
