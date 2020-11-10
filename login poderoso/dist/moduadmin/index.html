@@ -12,21 +12,23 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Solicitud</title>
+    <title>LifeChat</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style1.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
-  <body>
+  <body onload="VerCliente()">
     <nav>
 <div class="logo">
 <a id="nav-link" href="https://thelifechat.tk">Usac Store</div></a>
 <div class="nav-items">
-  <li><a href="../APPSINICIO/index.html">Inicio</a></li>
-  <li><a href="../CATINICIO/index.html">Categorias</a></li>
-  <li><a href="">Subir App</a></li>
-   <li><a href="../ModUser/index.html">Modificar Perfil</a></li>
-   <li><a href="../index.html">Cerrar Sesión</a></li>
+  <li><a href="../ADMIN/index.html">Inicio</a></li>
+  <li><a href="../CMASIVAPPS/index.html">Gestión Apps</a></li>
+   <li><a href="../CuadroRESEÑAS/index.html">Reseñas</a></li>
+  <li><a href="../CARGACAT/index.html">Categorias</a></li>
+
+   <li><a href="../USUARIOS/index.html">Usuarios</a></li>
+   <li><a href="../index.html">Cerrar Sesion</a></li>
 </div>
 </nav>
 <script>
@@ -73,49 +75,39 @@ function show1() {
   </script>
                   <div class="middle">
                     <div class="container">
-                          <header>Solicitar Apps</header>
+                          <header>Modificar Perfil</header>
                           <form onsubmit="return false">
                             
-                             
-                            
-                            
-                              <div class="input-field">
-                                <input class="big"type="text" id="titulo" placeholder="Titulo" required>
+                            <a>NOMBRE</a>
+                            <div class="input-field">
+                                <input type="text" class="big" id="nombre" placeholder="Nombre" >
                               </div>
                             
+                              <a>APELLIDO</a>
+                              <div class="input-field">
+                                <input class="big"type="text" id="apellido" placeholder="Apellido" >
+                              </div>
+                             
+                              <a>NOMBRE DE USUARIO</a>
                             <div class="input-field">
-                              <input type="text" id="url" placeholder="Url de Imagen" required>
+                              <input type="text" id="username" placeholder="Nombre de Usuario" >
                             </div>
-
-                            <div class="input-field">
-                              <input type="text" id="categoria" placeholder="Categoría(opcional)">
-                            </div>
-
-                            <div class="input-field">
-                              <input type="text" id="descargas" placeholder="No. de descargas" required>
-                            </div>
-
-                            <div class="input-field">
-                              <input type="text" id="precio" placeholder="Precio" required>
-                            </div>
-
-                            <div class="input-field">
-                              <input type="text" id="likes" placeholder="Likes" required>
+                            <a>CONTRASEÑA</a>
+                           <div class="input-field">
+                              <input type="text" id="pass"  placeholder="Password" >
+                              <span class="show" onclick="show()"></span>
                             </div>
                             
-                            <div >
-                              <textarea id="descripcion" rows="8" cols="25" placeholder="Descripción"></textarea>
-                            </div>
-
-
-
                     <div class="button">
                               <div class="inner">
                     </div>
-                    <button onclick="Solicitar()">Solicitar</button>
+                    <button onclick="modd()">Guardar Cambios</button>
                             </div>
                     </form>
-                    
+                    <div class="forgot">
+                      <a href="/SignUp/index.html"></a>
+                    </div>
+                   
                     </div>
                         </div>
       
@@ -189,51 +181,75 @@ function show1() {
 		headers.append('Access-Control-Allow-Origin', 'http://localhost:5001');
 		headers.append('Access-Control-Allow-Credentials', 'true');
 		headers.append('GET', 'POST', 'OPTIONS');
-		function Solicitar(){
-			//Obteniendo la data para el registro
+		function modd(){
+		
       
 
 
-    
-
-			let tit = document.getElementById("titulo").value;
-			let uerl = document.getElementById("url").value;
-			let cat = document.getElementById("categoria").value;
-      let des = document.getElementById("descargas").value;
-			let desc = document.getElementById("descripcion").value;
-			let prec = document.getElementById("precio").value;
-			let lik = document.getElementById("likes").value;
-
-
-
-
-			//Mando a hacer la peticion
-			fetch('http://localhost:5001/SolicitudApp', {
+      let userr =  sessionStorage.usuario
+			let nomb = document.getElementById("nombre").value;
+			let apel = document.getElementById("apellido").value;
+			let user = document.getElementById("username").value;
+			let pass = document.getElementById("pass").value;
+	
+			fetch('http://localhost:5001/modificar', {
   				method: 'POST',
   				headers: headers,
-  				body: `{  
-					"titulo":"${tit}",
-    				"url":"${uerl}",
-        			"categoria":"${cat}",
-              "descargas":"${des}",
-              "descripcion":"${desc}",
-              "precio":"${prec}",
-              "likes":"${lik}",
-              "apro":"N"
+  				body: `{
+            "user":"${userr}",  
+					"nombre":"${nomb}",
+					"apellido":"${apel}",
+    				"username":"${user}",
+        			"password":"${pass}"
                      }`,
 				})
 			//Aca espero a mi respuesta
 			.then(response => response.json())
 			//Aca yo ya trabajo con la respuesta
 			.then(data => {
-				alert(data.data)
-        window.location.replace('../APPSINICIO/index.html')
+        alert(data.data)
+        console.log(username.user)
+        console.log(user)
+        sessionStorage.setItem("usuario",user)
+       window.location.replace('../USUARIOS/index.html')
 			})
 			.catch((error) => {
   				console.error('Error:', error);
 			});
 
-		}
+    }
+    
+
+
+    function VerCliente(){
+      var cargar = sessionStorage.usuario
+      console.log(cargar)
+
+            fetch('http://localhost:5001/obteneruser/'+cargar, {
+            method: 'GET',
+            headers: headers,
+          })
+            //Aca espero a mi respuesta
+            .then(response => response.json()
+            )
+
+            .then(data => {
+              console.log(data)
+              document.querySelector('#nombre').value = data.nombre
+              document.querySelector('#apellido').value = data.apellido
+              document.querySelector('#username').value = data.username
+              document.querySelector('#pass').value = data.password
+              
+  
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+           
+
+
+
+    }
 		
 	</script>
       
