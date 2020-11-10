@@ -22,10 +22,10 @@
 <div class="logo">
 <a id="nav-link" href="https://thelifechat.tk">Usac Store</div></a>
 <div class="nav-items">
-  <li><a href="/login poderoso/dist/VIDEO/index.html">Inicio</a></li>
-<li><a href="/login poderoso/dist/APPSNOREGISTRADO/index.html">Apps</a></li>
+  <li><a href="VIDEO/index.html">Inicio</a></li>
+<li><a href="APPSNOREGISTRADO/index.html">Apps</a></li>
 <li><a href="#">Login</a></li>
-<li><a href="/login poderoso/dist/Registro/index.html">Registro</a></li>
+<li><a href="Registro/index.html">Registro</a></li>
 
 </div>
 </nav>
@@ -89,10 +89,10 @@ function show1() {
                             </div>
                     </form>
                     <div class="forgot">
-                      <a href="/login poderoso/dist/recuperar/index.html">Recuperar contraseña </a>
+                      <a href="recuperar/index.html">Recuperar contraseña </a>
                     </div>
                     <div class="signup">
-                        No tiene una cuenta? <a href="/login poderoso/dist/Registro/index.html"> Registrar</a>
+                        No tiene una cuenta? <a href="Registro/index.html"> Registrar</a>
                           </div>
                     </div>
                         </div>
@@ -144,10 +144,10 @@ function show1() {
         console.log(data.rol)
         if(data.rol=='Cliente'){
         sessionStorage.setItem("usuario",data.user)
-        location.href="/login poderoso/dist/APPSINICIO/index.html"}
+        location.href="APPSINICIO/index.html"}
         else if(data.rol=='Admin'){
         sessionStorage.setItem("usuario",data.user)
-        location.href="/login poderoso/dist/ADMIN/index.html"}
+        location.href="ADMIN/index.html"}
 			})
 			.catch((error) => {
   				console.error('Error:', error);
